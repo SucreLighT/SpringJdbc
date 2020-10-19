@@ -8,6 +8,10 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
+    <bean id="accountDao2" class="cn.sucrelt.dao.impl.AccountDaoImpl2">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <!-- 配置一个数据库的操作模板：JdbcTemplate -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
