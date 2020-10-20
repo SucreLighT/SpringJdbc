@@ -4,18 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 配置业务层-->
+    <bean id="accountService" class="cn.sucrelt.service.impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+
     <bean id="accountDao" class="cn.sucrelt.dao.impl.AccountDaoImpl">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="dataSource" ref="dataSource"></property>
     </bean>
 
-    <bean id="accountDao2" class="cn.sucrelt.dao.impl.AccountDaoImpl2">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <!-- 配置一个数据库的操作模板：JdbcTemplate -->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
