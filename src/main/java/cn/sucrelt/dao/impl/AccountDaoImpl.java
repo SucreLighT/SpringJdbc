@@ -3,25 +3,20 @@ package cn.sucrelt.dao.impl;
 import cn.sucrelt.dao.AccountDao;
 import cn.sucrelt.domain.Account;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import java.util.List;
 
-public class AccountDaoImpl implements AccountDao {
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
 
     public Account findAccountById(Integer accountId) {
-        List<Account> accounts = jdbcTemplate.query("select * from account where id = ?",
+        List<Account> accounts = getJdbcTemplate().query("select * from account where id = ?",
                 new BeanPropertyRowMapper<Account>(Account.class), accountId);
         return accounts.isEmpty() ? null : accounts.get(0);
     }
 
     public Account findAccountByName(String accountName) {
-        List<Account> accounts = jdbcTemplate.query("select * from account where name = ?",
+        List<Account> accounts = getJdbcTemplate().query("select * from account where name = ?",
                 new BeanPropertyRowMapper<Account>(Account.class), accountName);
         if (accounts.isEmpty()) {
             return null;
@@ -33,7 +28,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     public void updateAccount(Account account) {
-        jdbcTemplate.update("update account set name = ? ,money = ? where id=?", account.getName(), account.getMoney()
+        getJdbcTemplate().update("update account set name = ? ,money = ? where id=?", account.getName(), account.getMoney()
                 , account.getId());
     }
 
